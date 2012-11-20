@@ -31,6 +31,12 @@ def image_summary(filename):
     for c, n in sorted((count, image_name) for image_name, count in rslt.items()):
         print('{}\t{}'.format(c, n))
 
+@baker.command
+def images(filename):
+    "List images in profile."
+    for name in sorted({e.image_name for e in entries(filename)}):
+        print(name)
+
 def main():
     baker.run()
 
