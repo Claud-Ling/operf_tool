@@ -26,10 +26,12 @@ def image_summary(filename):
     "Sample counts per image."
     rslt = {}
     for e in entries(filename):
-        rslt[e.image_name] = rslt.setdefault(e.image_name, 0) + e.samples
+        old_vals = rslt.setdefault(e.image_name, (0,0))
+        rslt[e.image_name] = (old_vals[0] + e.samples,
+                              old_vals[1] + e.percent)
 
     for c, n in sorted((count, image_name) for image_name, count in rslt.items()):
-        print('{}\t{}'.format(c, n))
+        print('{}\t{:.3}%\t{}'.format(c[0], c[1], n))
 
 @baker.command
 def images(filename):
